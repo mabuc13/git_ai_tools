@@ -1,0 +1,12 @@
+#ifndef GENETICLUDOEVOLV_H
+#define GENETICLUDOEVOLV_H
+
+class geneticLudoEvolv
+{
+public:
+    geneticLudoEvolv();
+private:
+    float randomize(float gene, float amount, );
+};
+
+#endif // GENETICLUDOEVOLV_H
