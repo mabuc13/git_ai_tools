@@ -9,6 +9,11 @@ smart_ludo_player::smart_ludo_player(int color):
 {
 }
 
+void smart_ludo_player::setScores(baseScores aScore)
+{
+    playerPriorities = aScore;
+}
+
 int smart_ludo_player::make_decision(){ //THis is where i should modify my code, in order to make an awesome AI
                                   //Player positions should do fine for the statespace model
                                   //This statespace should be used to see if there's some special cases which is true. And these special cases
@@ -261,15 +266,35 @@ possibilities smart_ludo_player::explorePossibilities(int piece)
     currentP.moveForwardB = moveForwardPossible(pieceIndex);
     currentP.outOfHomeB = outOfHomePossible(pieceIndex);
     currentP.sendHomeB = sendHomePossible(pieceIndex);
+    if (currentP.sendHomeB == true)
+    {
+        currentP.moveForwardB = false;
+    }
     currentP.moveStarB = moveStarPossible(pieceIndex);
+    if (currentP.moveStarB == true)
+    {
+        currentP.moveForwardB = false;
+    }
     currentP.moveStarSendHomeB = moveStarSendHomePossible(pieceIndex);
+    if (currentP.moveStarSendHomeB == true)
+    {
+        currentP.moveForwardB = false;
+    }
     currentP.moveGlobeB = moveGlobePossible(pieceIndex);
+    if (currentP.moveGlobeB == true)
+    {
+        currentP.moveForwardB = false;
+    }
     currentP.createBlockB = createBlockPossible(pieceIndex);
-    if (currentP.stopBlockB == true)
+    if (currentP.createBlockB == true)
     {
         currentP.moveForwardB = false;
     }
     currentP.stopBlockB = stopBlockPossible(pieceIndex);
+    if (currentP.stopBlockB == true)
+    {
+        currentP.moveForwardB = false;
+    }
     currentP.moveToFinishB = moveToFinishPossible(pieceIndex);
     currentP.moveInFinishB = moveInFinishPossible(pieceIndex);
     currentP.outOfHomeB = outOfHomePossible(pieceIndex);
@@ -470,7 +495,9 @@ float smart_ludo_player::calcSafety(int piece) //A high score will mean that the
     int end_pos = dice_roll + pos_start_of_turn[piece];
     float currentSafety;
     float moveSafety;
-
+    bool star = isStar(end_pos);
+    if (star)
+        end_pos += 13;
 
     // movesafety - currentsafety
 
@@ -482,7 +509,7 @@ float smart_ludo_player::calcSafety(int piece) //A high score will mean that the
         {
             if (pos_start_of_turn[piece] > 6)
             {
-                if ((pos_start_of_turn[piece] - pos_start_of_turn[i]  < 7  ))
+                if (((pos_start_of_turn[piece] - pos_start_of_turn[i])  < 7  ))
                 {
                     if (pos_start_of_turn[i] == -1)
                     {
@@ -497,7 +524,7 @@ float smart_ludo_player::calcSafety(int piece) //A high score will mean that the
             }
             else
             {
-                if (pos_start_of_turn[i] - pos_start_of_turn[piece] > 45)
+                if ((pos_start_of_turn[i] - pos_start_of_turn[piece]) > 45)
                     if (pos_start_of_turn[i] == -1)
                     {
                     }
@@ -518,7 +545,7 @@ float smart_ludo_player::calcSafety(int piece) //A high score will mean that the
         {
             if (end_pos > 6)
             {
-                if ((end_pos - pos_start_of_turn[i]  < 7  ))
+                if (((end_pos - pos_start_of_turn[i])  < 7  ))
                 {
                     if (pos_start_of_turn[i] == -1)
                     {
@@ -532,7 +559,7 @@ float smart_ludo_player::calcSafety(int piece) //A high score will mean that the
             }
             else
             {
-                if (end_pos - pos_start_of_turn[piece] > 45)
+                if ((end_pos - pos_start_of_turn[piece] )> 45)
                     if (pos_start_of_turn[i] == -1)
                     {
                     }

@@ -6,7 +6,8 @@
 #include <iostream>
 #include <QtCore>
 #include <QThread>
-
+#include "smart_ludo_player.h"
+#include "geneticludoevolv.h"
 
 #include "positions_and_dice.h"
 
@@ -41,6 +42,8 @@ private:
             QThread::msleep(msecs);
         }
     }
+
+    geneticLudoEvolv evolver;
 public:
     int color;
     std::vector<int> player_positions;
@@ -49,9 +52,16 @@ public:
         dice_result = dis(gen);
     }
     int getDiceRoll() {return dice_result; }
+    void resetCounter();
     game();
+//    void setPlayers(smart_ludo_player& p1, smart_ludo_player &p2, smart_ludo_player &p3, smart_ludo_player &p4, geneticLudoEvolv &evolv);
     void setGameDelay(unsigned int mili_seconds){ game_delay = mili_seconds; }
     void reset();
+    int getW1();
+    int getW2();
+    int getW3();
+    int getW4();
+    int getWT();
 signals:
     void player1_start(positions_and_dice);
     void player2_start(positions_and_dice);

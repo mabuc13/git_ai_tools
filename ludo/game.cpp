@@ -14,6 +14,7 @@ game::game():
 {
 }
 
+
 void game::reset(){
     game_complete = false;
     turn_complete = true;
@@ -23,6 +24,14 @@ void game::reset(){
     color = 3;
 }
 
+void game::resetCounter()
+{
+    totalWinCnt = 0;
+    win1Cnt = 0;
+    win2Cnt = 0;
+    win3Cnt = 0;
+    win4Cnt = 0;
+}
 
 int game::rel_to_fixed(int relative_piece_index){
     return relative_piece_index + color * 4;
@@ -244,33 +253,65 @@ void game::turnComplete(bool win){
     game_complete = win;
     turn_complete = true;
     if(game_complete){
-        std::cout << "player: " << color << " won" << std::endl;
+       // std::cout << "player: " << color << " won" << std::endl;
         totalWinCnt++;
         if (color == 0)
         {
             win1Cnt++;
         }
-        std::cout << "Player 1 has won: " << win1Cnt << " times\n";
-        std::cout << "Which is a winrate of: " << (float)win1Cnt/(float)totalWinCnt << "\n";
+
         if (color == 1)
         {
             win2Cnt++;
         }
-        std::cout << "Player 2 has won: " << win2Cnt << " times\n";
+
         if (color == 2)
         {
             win3Cnt++;
         }
-        std::cout << "Player 3 has won: " << win3Cnt << " times\n";
+
         if (color == 3)
         {
             win4Cnt++;
         }
-        std::cout << "Player 4 has won: " << win4Cnt << " times\n";
-        std::cout << "Color: " << color << " has won \n" ;
-        std::cout << "Total games: " << totalWinCnt << "\n\n";
+
+        if (totalWinCnt == 499)
+        {
+            std::cout << "Player 1 has won: " << win1Cnt << " times with a winrate of: " << (float)win1Cnt/(float)totalWinCnt << "\n";
+            std::cout << "Player 2 has won: " << win2Cnt << " times with a winrate of: " << (float)win2Cnt/(float)totalWinCnt << "\n";
+            std::cout << "Player 3 has won: " << win3Cnt << " times with a winrate of: " << (float)win3Cnt/(float)totalWinCnt << "\n";
+            std::cout << "Player 4 has won: " << win4Cnt << " times with a winrate of: " << (float)win4Cnt/(float)totalWinCnt << "\n";
+            std::cout << "Color: " << color << " has won \n" ;
+            std::cout << "Total games: " << totalWinCnt << "\n\n";
+        }
+
         emit declare_winner(color);
     }
+}
+
+int game::getW1()
+{
+    return win1Cnt;
+}
+
+int game::getW2()
+{
+    return win2Cnt;
+}
+
+int game::getW3()
+{
+    return win3Cnt;
+}
+
+int game::getW4()
+{
+    return win4Cnt;
+}
+
+int game::getWT()
+{
+    return totalWinCnt;
 }
 
 void game::run() {
