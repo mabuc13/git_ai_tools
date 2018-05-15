@@ -32,6 +32,17 @@ int main(int argc, char *argv[]){
         ludo_player_random p2;
         ludo_player_random p3;
         ludo_player_random p4;
+        smart_ludo_player p5(1);
+        smart_ludo_player p6(2);
+        smart_ludo_player p7(3);
+        smart_ludo_player * p1Ptr = &p1;
+        smart_ludo_player * p5Ptr = &p5;
+        smart_ludo_player * p6Ptr = &p6;
+        smart_ludo_player * p7Ptr = &p7;
+        ludo_player_random * p2Ptr = &p2;
+        ludo_player_random * p3Ptr = &p3;
+        ludo_player_random * p4Ptr = &p4;
+
 /**/
 
     //p1.setScores(one);
@@ -54,7 +65,7 @@ int main(int argc, char *argv[]){
      //Or don't add the GUI
     QObject::connect(&g,SIGNAL(close()),&a,SLOT(quit()));
     //
-
+    std::cout << "Playing 2 training games with only smart players, then one rating game and breeding on the best performing players\n";
     //set up for each player
     /* QObject::connect(&g, SIGNAL(player1_start(positions_and_dice)),p1,SLOT(start_turn(positions_and_dice)));
     QObject::connect(p1,SIGNAL(select_piece(int)),                &g, SLOT(movePiece(int)));
@@ -77,8 +88,8 @@ int main(int argc, char *argv[]){
     QObject::connect(p4,SIGNAL(turn_complete(bool)),              &g, SLOT(turnComplete(bool)));
 */
 
-
-    QObject::connect(&g, SIGNAL(player1_start(positions_and_dice)),&p1,SLOT(start_turn(positions_and_dice)));
+    g.addPlayers(p1Ptr, p2Ptr, p3Ptr, p4Ptr, p5Ptr, p6Ptr, p7Ptr);
+   /* QObject::connect(&g, SIGNAL(player1_start(positions_and_dice)),&p1,SLOT(start_turn(positions_and_dice)));
     QObject::connect(&p1,SIGNAL(select_piece(int)),                &g, SLOT(movePiece(int)));
     QObject::connect(&g, SIGNAL(player1_end(std::vector<int>)),    &p1,SLOT(post_game_analysis(std::vector<int>)));
     QObject::connect(&p1,SIGNAL(turn_complete(bool)),              &g, SLOT(turnComplete(bool)));
@@ -96,13 +107,19 @@ int main(int argc, char *argv[]){
     QObject::connect(&g, SIGNAL(player4_start(positions_and_dice)),&p4,SLOT(start_turn(positions_and_dice)));
     QObject::connect(&p4,SIGNAL(select_piece(int)),                &g, SLOT(movePiece(int)));
     QObject::connect(&g, SIGNAL(player4_end(std::vector<int>)),    &p4,SLOT(post_game_analysis(std::vector<int>)));
-    QObject::connect(&p4,SIGNAL(turn_complete(bool)),              &g, SLOT(turnComplete(bool)));
+    QObject::connect(&p4,SIGNAL(turn_complete(bool)),              &g, SLOT(turnComplete(bool)));*/
+   // g.initTrainingGame();
+    g.initTrainingGame();
+    QApplication * aPtr;
+    aPtr = &a;
+    g.runGame(aPtr);
+    g.start();
+    a.exec();
 
-    for (int ii = 0; ii < 100000; ii++){
-        // std::cout << "Some insight " ;
-        g.start();
-        a.exec();
-        g.reset();
+   //    // std::cout << "Some insight " ;
+     //   g.start();
+      //  a.exec();
+       // g.reset();
        // std::cout << "Where " ;
 /*
            int win1Cnt = g.getW1();
@@ -176,6 +193,6 @@ int main(int argc, char *argv[]){
             } */
 
 
-    }
+  //  }
     return 0;
 }

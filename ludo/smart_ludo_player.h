@@ -11,20 +11,20 @@
  */
 
 struct baseScores{
-    float createBlockS = -0.484;
-       float finishPieceS = 0.902;
-       float moveForwardS =-0.402;
-       float moveGlobeS = 0.082;
-       float moveInFinishS =  -0.694;
-       float moveStarS = -0.426;
-       float moveStarSendHomeS = -1.974;
-       float moveToFinishS = 1.732;
-       float outOfHomeS =0.292;
-       float stopBlockS = -1.998;
-       float sendHomeS = 0.472;
+    float createBlockS = 0.1;
+       float finishPieceS = 0.1;
+       float moveForwardS = 0.1;
+       float moveGlobeS = 0.1;
+       float moveInFinishS =  0.1;
+       float moveStarS = 0.1;
+       float moveStarSendHomeS = 0.1;
+       float moveToFinishS = 0.1;
+       float outOfHomeS =0.1;
+       float stopBlockS = 0.1;
+       float sendHomeS = 0.1;
 
-       float safetyFactor = 0.38;
-       float potFactor = 0.884;
+       float safetyFactor = 0.1;
+       float potFactor = 0.1;
 
 };
 

@@ -14,6 +14,18 @@ game::game():
 {
 }
 
+void game::runGame(QApplication* oneObject)
+{
+    theApplication = oneObject;
+    //theGame = aGame;
+//    for (int ii = 0; ii < 100000; ii++){
+//        // std::cout << "Some insight " ;
+//        aGame.start();
+//        oneObject->exec();
+//        aGame.reset();
+//        std::cout << ii << "\n";
+//    }
+}
 
 void game::reset(){
     game_complete = false;
@@ -50,6 +62,113 @@ int game::isStar(int index){
         return 7;
     }
     return 0;
+}
+
+void game::addPlayers(smart_ludo_player *p1, ludo_player_random *p2, ludo_player_random *p3, ludo_player_random *p4, smart_ludo_player *p5, smart_ludo_player *p6, smart_ludo_player *p7)
+{
+    pp1 = p1;
+    pp2 = p2;
+    pp3 = p3;
+    pp4 = p4;
+    pp5 = p5;
+    pp6 = p6;
+    pp7 = p7;
+}
+
+void game::initRatingGame()
+{
+    if (firstInit)
+    {
+        QObject::disconnect(this,SIGNAL(player1_start(positions_and_dice)),&(*pp1), SLOT(start_turn(positions_and_dice)));
+        QObject::disconnect(&(*pp1),SIGNAL(select_piece(int)),               this, SLOT(movePiece(int)));
+        QObject::disconnect(this, SIGNAL(player1_end(std::vector<int>)),    &(*pp1),SLOT(post_game_analysis(std::vector<int>)));
+        QObject::disconnect(&(*pp1),SIGNAL(turn_complete(bool)),                this,SLOT(turnComplete(bool)));
+
+         QObject::disconnect(this, SIGNAL(player2_start(positions_and_dice)),&(*pp5),SLOT(start_turn(positions_and_dice)));
+         QObject::disconnect(&(*pp5),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+         QObject::disconnect(this, SIGNAL(player2_end(std::vector<int>)),    &(*pp5),SLOT(post_game_analysis(std::vector<int>)));
+         QObject::disconnect(&(*pp5),SIGNAL(turn_complete(bool)),               this, SLOT(turnComplete(bool)));
+
+         QObject::disconnect(this, SIGNAL(player3_start(positions_and_dice)),&(*pp6),SLOT(start_turn(positions_and_dice)));
+         QObject::disconnect(&(*pp6),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+         QObject::disconnect(this, SIGNAL(player3_end(std::vector<int>)),    &(*pp6),SLOT(post_game_analysis(std::vector<int>)));
+         QObject::disconnect(&(*pp6),SIGNAL(turn_complete(bool)),               this, SLOT(turnComplete(bool)));
+
+         QObject::disconnect(this, SIGNAL(player4_start(positions_and_dice)),&(*pp7),SLOT(start_turn(positions_and_dice)));
+         QObject::disconnect(&(*pp7),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+         QObject::disconnect(this, SIGNAL(player4_end(std::vector<int>)),    &(*pp7),SLOT(post_game_analysis(std::vector<int>)));
+         QObject::disconnect(&(*pp7),SIGNAL(turn_complete(bool)),              this, SLOT(turnComplete(bool)));
+      //  std::cout << "I disconnected \n";
+    }
+    QObject::connect(this,SIGNAL(player1_start(positions_and_dice)),&(*pp1), SLOT(start_turn(positions_and_dice)));
+    QObject::connect(&(*pp1),SIGNAL(select_piece(int)),               this, SLOT(movePiece(int)));
+    QObject::connect(this, SIGNAL(player1_end(std::vector<int>)),    &(*pp1),SLOT(post_game_analysis(std::vector<int>)));
+    QObject::connect(&(*pp1),SIGNAL(turn_complete(bool)),                this,SLOT(turnComplete(bool)));
+    //QObject::connect(this,SIGNAL(close()),&(*theApplication),SLOT(quit()));
+    QObject::connect(this, SIGNAL(player2_start(positions_and_dice)),&(*pp2),SLOT(start_turn(positions_and_dice)));
+    QObject::connect(&(*pp2),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+    QObject::connect(this, SIGNAL(player2_end(std::vector<int>)),    &(*pp2),SLOT(post_game_analysis(std::vector<int>)));
+    QObject::connect(&(*pp2),SIGNAL(turn_complete(bool)),               this, SLOT(turnComplete(bool)));
+
+    QObject::connect(this, SIGNAL(player3_start(positions_and_dice)),&(*pp3),SLOT(start_turn(positions_and_dice)));
+    QObject::connect(&(*pp3),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+    QObject::connect(this, SIGNAL(player3_end(std::vector<int>)),    &(*pp3),SLOT(post_game_analysis(std::vector<int>)));
+    QObject::connect(&(*pp3),SIGNAL(turn_complete(bool)),               this, SLOT(turnComplete(bool)));
+
+    QObject::connect(this, SIGNAL(player4_start(positions_and_dice)),&(*pp4),SLOT(start_turn(positions_and_dice)));
+    QObject::connect(&(*pp4),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+    QObject::connect(this, SIGNAL(player4_end(std::vector<int>)),    &(*pp4),SLOT(post_game_analysis(std::vector<int>)));
+    QObject::connect(&(*pp4),SIGNAL(turn_complete(bool)),              this, SLOT(turnComplete(bool)));
+
+}
+
+void game::initTrainingGame()
+{
+
+    if (firstInit)
+    {
+        QObject::disconnect(this,SIGNAL(player1_start(positions_and_dice)),&(*pp1), SLOT(start_turn(positions_and_dice)));
+        QObject::disconnect(&(*pp1),SIGNAL(select_piece(int)),               this, SLOT(movePiece(int)));
+        QObject::disconnect(this, SIGNAL(player1_end(std::vector<int>)),    &(*pp1),SLOT(post_game_analysis(std::vector<int>)));
+        QObject::disconnect(&(*pp1),SIGNAL(turn_complete(bool)),                this,SLOT(turnComplete(bool)));
+        //QObject::connect(this,SIGNAL(close()),&(*theApplication),SLOT(quit()));
+        QObject::disconnect(this, SIGNAL(player2_start(positions_and_dice)),&(*pp2),SLOT(start_turn(positions_and_dice)));
+        QObject::disconnect(&(*pp2),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+        QObject::disconnect(this, SIGNAL(player2_end(std::vector<int>)),    &(*pp2),SLOT(post_game_analysis(std::vector<int>)));
+        QObject::disconnect(&(*pp2),SIGNAL(turn_complete(bool)),               this, SLOT(turnComplete(bool)));
+
+        QObject::disconnect(this, SIGNAL(player3_start(positions_and_dice)),&(*pp3),SLOT(start_turn(positions_and_dice)));
+        QObject::disconnect(&(*pp3),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+        QObject::disconnect(this, SIGNAL(player3_end(std::vector<int>)),    &(*pp3),SLOT(post_game_analysis(std::vector<int>)));
+        QObject::disconnect(&(*pp3),SIGNAL(turn_complete(bool)),               this, SLOT(turnComplete(bool)));
+
+        QObject::disconnect(this, SIGNAL(player4_start(positions_and_dice)),&(*pp4),SLOT(start_turn(positions_and_dice)));
+        QObject::disconnect(&(*pp4),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+        QObject::disconnect(this, SIGNAL(player4_end(std::vector<int>)),    &(*pp4),SLOT(post_game_analysis(std::vector<int>)));
+        QObject::disconnect(&(*pp4),SIGNAL(turn_complete(bool)),              this, SLOT(turnComplete(bool)));
+    }
+    // QObject::connect(this,SIGNAL(close()),&(*theApplication),SLOT(quit()));
+   QObject::connect(this,SIGNAL(player1_start(positions_and_dice)),&(*pp1), SLOT(start_turn(positions_and_dice)));
+   QObject::connect(&(*pp1),SIGNAL(select_piece(int)),               this, SLOT(movePiece(int)));
+   QObject::connect(this, SIGNAL(player1_end(std::vector<int>)),    &(*pp1),SLOT(post_game_analysis(std::vector<int>)));
+   QObject::connect(&(*pp1),SIGNAL(turn_complete(bool)),                this,SLOT(turnComplete(bool)));
+
+    QObject::connect(this, SIGNAL(player2_start(positions_and_dice)),&(*pp5),SLOT(start_turn(positions_and_dice)));
+    QObject::connect(&(*pp5),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+    QObject::connect(this, SIGNAL(player2_end(std::vector<int>)),    &(*pp5),SLOT(post_game_analysis(std::vector<int>)));
+    QObject::connect(&(*pp5),SIGNAL(turn_complete(bool)),               this, SLOT(turnComplete(bool)));
+
+    QObject::connect(this, SIGNAL(player3_start(positions_and_dice)),&(*pp6),SLOT(start_turn(positions_and_dice)));
+    QObject::connect(&(*pp6),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+    QObject::connect(this, SIGNAL(player3_end(std::vector<int>)),    &(*pp6),SLOT(post_game_analysis(std::vector<int>)));
+    QObject::connect(&(*pp6),SIGNAL(turn_complete(bool)),               this, SLOT(turnComplete(bool)));
+
+    QObject::connect(this, SIGNAL(player4_start(positions_and_dice)),&(*pp7),SLOT(start_turn(positions_and_dice)));
+    QObject::connect(&(*pp7),SIGNAL(select_piece(int)),                 this, SLOT(movePiece(int)));
+    QObject::connect(this, SIGNAL(player4_end(std::vector<int>)),    &(*pp7),SLOT(post_game_analysis(std::vector<int>)));
+    QObject::connect(&(*pp7),SIGNAL(turn_complete(bool)),              this, SLOT(turnComplete(bool)));
+    if (!firstInit)
+        firstInit = true;
 }
 
 int game::isOccupied(int index){ //returns number of people of another color
@@ -138,6 +257,8 @@ int game::next_turn(unsigned int delay = 0){
 void game::movePiece(int relative_piece){
     int fixed_piece = rel_to_fixed(relative_piece);     //index of the piece in player_positions
     int modifier = color * 13;
+   // if (ratingSwitcer > 1)
+    //    std::cout << "Color: " << color << "\n";
     int relative_pos = player_positions[fixed_piece];
     int target_pos = 0;
     if(player_positions[fixed_piece] == -1){        //if the selected piece is in the safe house, try to move it to start
@@ -255,6 +376,7 @@ void game::turnComplete(bool win){
     if(game_complete){
        // std::cout << "player: " << color << " won" << std::endl;
         totalWinCnt++;
+        //std::cout << "TotalwinCOunt: " << totalWinCnt << "\n";
         if (color == 0)
         {
             win1Cnt++;
@@ -275,13 +397,13 @@ void game::turnComplete(bool win){
             win4Cnt++;
         }
 
-        if (totalWinCnt == 499)
+        if (totalWinCnt == 1500 && ratingGame)
         {
             std::cout << "Player 1 has won: " << win1Cnt << " times with a winrate of: " << (float)win1Cnt/(float)totalWinCnt << "\n";
             std::cout << "Player 2 has won: " << win2Cnt << " times with a winrate of: " << (float)win2Cnt/(float)totalWinCnt << "\n";
             std::cout << "Player 3 has won: " << win3Cnt << " times with a winrate of: " << (float)win3Cnt/(float)totalWinCnt << "\n";
             std::cout << "Player 4 has won: " << win4Cnt << " times with a winrate of: " << (float)win4Cnt/(float)totalWinCnt << "\n";
-            std::cout << "Color: " << color << " has won \n" ;
+            //std::cout << "Color: " << color << " has won \n" ;
             std::cout << "Total games: " << totalWinCnt << "\n\n";
         }
 
@@ -315,13 +437,205 @@ int game::getWT()
 }
 
 void game::run() {
+    std::cout << "Entered run \n" ;
     if(DEBUG) std::cout << "color:     relative pos => fixed\n";
+    for (int ii = 0; ii < 100000000; ii++){
+        start();
+       // std::cout<< "Started game\n" ;
     while(!game_complete){
+        //std::cout << "Running...\n";
         if(turn_complete){
             turn_complete = false;
             msleep(game_delay/4);
             next_turn(game_delay - game_delay/4);
         }
+    }
+        // std::cout << "Some insight " ;
+        //if (ii != 0 )
+        //    theApplication->exec();
+     //std::cout << ii << "\n";
+     if (totalWinCnt > 1500)
+     {
+         if (trainingCounter < 2)
+         {
+         //First train 10 generations
+         std::vector<int> winVector = {win1Cnt, win2Cnt, win3Cnt, win4Cnt};
+         int highestWinCount = win1Cnt;
+         int secondHighestWinCount = win2Cnt;
+         for (int i = 0; i < 4; i++)
+         {
+             if (winVector[i] > highestWinCount)
+             {
+                 secondHighestWinCount = highestWinCount;
+                 highestWinCount = winVector[i];
+             }
+         }
+
+         baseScores gene1;
+         baseScores gene2;
+      //     std::cout << "We " ;
+         if (highestWinCount == win1Cnt)
+         {
+             gene1 = (*pp1).playerPriorities;
+         }
+         if (highestWinCount == win2Cnt)
+         {
+             gene1 = (*pp5).playerPriorities;
+         }
+         if (highestWinCount == win3Cnt)
+         {
+             gene1 = (*pp6).playerPriorities;
+         }
+         if (highestWinCount == win4Cnt)
+         {
+             gene1 = (*pp7).playerPriorities;
+         }
+
+   //    std::cout << "Stucked " ;
+         if (secondHighestWinCount == win1Cnt)
+         {
+             gene2 = (*pp1).playerPriorities;
+         }
+         if (secondHighestWinCount == win2Cnt)
+         {
+             gene2 = (*pp5).playerPriorities;
+         }
+         if (secondHighestWinCount == win3Cnt)
+         {
+             gene2 = (*pp6).playerPriorities;
+         }
+         if (secondHighestWinCount == win4Cnt)
+         {
+             gene2 = (*pp7).playerPriorities;
+         }
+
+     //      std::cout << "This " ;
+         baseScores child1 = evolver.mergeGenes(gene1, gene2);
+         baseScores child2 = evolver.mergeGenes(gene1, gene2);
+         baseScores child3 = evolver.mergeGenes(gene1, gene2);
+         baseScores child4 = evolver.mergeGenes(gene1, gene2);
+//std::cout << "should " ;
+         (*pp1).setScores(child1);
+         (*pp5).setScores(child2);
+         (*pp6).setScores(gene1);
+         (*pp7).setScores(gene2);
+        //   std::cout << "provide " ;
+         resetCounter();
+         trainingCounter++;
+        // std::cout << "Training counter: " << trainingCounter << "\n";
+
+         }
+         else
+         {
+             switch (ratingSwitcer)
+             {
+             case 1:
+                 //std::cout << "Where ";
+                 initRatingGame();
+                 ratingGame = true;
+                 resetCounter();
+                 ratingSwitcer++;
+                 break;
+             case 2:
+                // std::cout << "is ";
+                 p1Rating = win1Cnt;
+                 geneBank = (*pp1).playerPriorities;
+                 (*pp1).playerPriorities = (*pp5).playerPriorities;
+                 resetCounter();
+                 ratingSwitcer++;
+                 break;
+             case 3:
+              //   std::cout << "the ";
+                 p2Rating = win1Cnt;
+                 (*pp1).playerPriorities = (*pp6).playerPriorities;
+                 resetCounter();
+                 ratingSwitcer++;
+                 break;
+             case 4:
+                 p3Rating = win1Cnt;
+                 (*pp1).playerPriorities = (*pp7).playerPriorities;
+                 resetCounter();
+                 ratingSwitcer++;
+                 break;
+             case 5:
+                 p4Rating = win1Cnt;
+                 (*pp1).playerPriorities = geneBank;
+                 resetCounter();
+                 ratingSwitcer = 1;
+                // trainingCounter = 0;
+                 initTrainingGame();
+                 ratingGame = false;
+                 std::vector<int> winVector2 = {p1Rating, p2Rating, p3Rating, p4Rating};
+                 int highestWinCount2 = p1Rating;
+                 int secondHighestWinCount2 = p2Rating;
+                 baseScores gene1;
+                 baseScores gene2;
+                 for (int i = 0; i < 4; i++)
+                 {
+                     if (winVector2[i] > highestWinCount2)
+                     {
+                         secondHighestWinCount2 = highestWinCount2;
+                         highestWinCount2 = winVector2[i];
+                     }
+                 }
+                 if (highestWinCount2 == p1Rating)
+                 {
+                     gene1 = (*pp1).playerPriorities;
+                 }
+                 if (highestWinCount2 == p2Rating)
+                 {
+                     gene1 = (*pp5).playerPriorities;
+                 }
+                 if (highestWinCount2 == p3Rating)
+                 {
+                     gene1 = (*pp6).playerPriorities;
+                 }
+                 if (highestWinCount2 == p4Rating)
+                 {
+                     gene1 = (*pp7).playerPriorities;
+                 }
+
+           //    std::cout << "Stucked " ;
+                 if (secondHighestWinCount2 == p1Rating)
+                 {
+                     gene2 = (*pp1).playerPriorities;
+                 }
+                 if (secondHighestWinCount2 == p2Rating)
+                 {
+                     gene2 = (*pp5).playerPriorities;
+                 }
+                 if (secondHighestWinCount2 == p3Rating)
+                 {
+                     gene2 = (*pp6).playerPriorities;
+                 }
+                 if (secondHighestWinCount2 == p4Rating)
+                 {
+                     gene2 = (*pp7).playerPriorities;
+                 }
+
+             //      std::cout << "This " ;
+                 std::cout << "The best performing parent gene: \n";
+                 evolver.printGene(gene1);
+                 std::cout << "The second best performing parent 1 gene: \n";
+                 evolver.printGene(gene2);
+                 baseScores child1 = evolver.mergeGenes(gene1, gene2);
+                 baseScores child2 = evolver.mergeGenes(gene1, gene2);
+                 baseScores child3 = evolver.mergeGenes(gene1, gene2);
+                 baseScores child4 = evolver.mergeGenes(gene1, gene2);
+        //std::cout << "should " ;
+                 (*pp1).setScores(child1);
+                 (*pp5).setScores(child2);
+                 (*pp6).setScores(gene1);
+                 (*pp7).setScores(gene2);
+
+                 //Make four new children with the highest winning players
+             }
+             //std::cout << "Switching counter: " << ratingSwitcer << "\n";
+         }
+     }
+        reset();
+
+        //std::cout << ii << "\n";
     }
     emit close();
     QThread::exit();

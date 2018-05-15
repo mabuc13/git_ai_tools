@@ -8,8 +8,10 @@
 #include <QThread>
 #include "smart_ludo_player.h"
 #include "geneticludoevolv.h"
-
+#include <QObject>
+#include <QApplication>
 #include "positions_and_dice.h"
+#include "ludo_player_random.h"
 
 // static int global_color = 5;
 
@@ -42,8 +44,24 @@ private:
             QThread::msleep(msecs);
         }
     }
-
+    QApplication * theApplication;
+    //game theGame;
     geneticLudoEvolv evolver;
+    smart_ludo_player * pp1, *pp5, *pp6, *pp7;
+    ludo_player_random * pp2, *pp3, *pp4;
+    int trainingCounter = 0;
+    int parent1WinCnt = 0;
+    int parent2WinCnt = 0;
+    baseScores pGene1;
+    baseScores pGene2;
+    int ratingSwitcer = 1;
+    int p1Rating = 0;
+    int p2Rating = 0;
+    int p3Rating = 0;
+    int p4Rating = 0;
+    baseScores geneBank;
+    bool firstInit = false;
+    bool ratingGame = false;
 public:
     int color;
     std::vector<int> player_positions;
@@ -51,6 +69,7 @@ public:
         std::uniform_int_distribution<> dis(1, 6);
         dice_result = dis(gen);
     }
+    void runGame(QApplication *oneObject);
     int getDiceRoll() {return dice_result; }
     void resetCounter();
     game();
@@ -62,6 +81,9 @@ public:
     int getW3();
     int getW4();
     int getWT();
+    void addPlayers(smart_ludo_player * p1, ludo_player_random * p2, ludo_player_random * p3, ludo_player_random * p4, smart_ludo_player * p5, smart_ludo_player * p6, smart_ludo_player * p7 );
+    void initRatingGame();
+    void initTrainingGame();
 signals:
     void player1_start(positions_and_dice);
     void player2_start(positions_and_dice);

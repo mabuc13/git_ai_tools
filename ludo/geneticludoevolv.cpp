@@ -299,9 +299,13 @@ baseScores geneticLudoEvolv::mergeGenes(baseScores parentOne, baseScores parentT
                 {
                     child.safetyFactor = randomize(parentTwo.safetyFactor, 0.2);
                     parentOneCounter++;
+                    if (child.safetyFactor < 0)
+                        child.safetyFactor = 0;
                 }
                 else
                     child.safetyFactor = parentTwo.safetyFactor;
+                    if (child.safetyFactor < 0)
+                        child.safetyFactor = 0;
             }
        //  switchCounter++;
             break;
@@ -341,8 +345,8 @@ baseScores geneticLudoEvolv::mergeGenes(baseScores parentOne, baseScores parentT
     //printGene(parentOne);
    // std::cout <<"And parent two gene: \n";
     //printGene(parentTwo);
-    std::cout << "Which resulted in following child gene: \n";
-    printGene(child);
+    //std::cout << "Which resulted in following child gene: \n";
+    //printGene(child);
     return child;
 }
 void geneticLudoEvolv::printGene(baseScores gene)

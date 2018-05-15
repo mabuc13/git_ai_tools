@@ -31,7 +31,7 @@ public:
     void randomAmount(){
             std::uniform_int_distribution<> dis2(-100, 100);
             randomInt = dis2(gen2);
-            randomFloat = float(randomInt)/500;
+            randomFloat = float(randomInt)/1000;
         }
     void genRandSelector(){
             std::uniform_int_distribution<> dis3(1, 10);
